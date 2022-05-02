@@ -27,7 +27,7 @@ public class JFrame extends javax.swing.JFrame {
         fan1 = new Fantasma(400, 300, Color.red);
 
         // Crea il giocatore
-        pacMan = new PacMan(100, 300, Color.blue);
+        pacMan = new PacMan(Color.blue, c);
         // e il thread per il suo movimento
         tt = new ThreadMovimentoPacman(pacMan, fan1, c);
         tt.start();
@@ -44,6 +44,13 @@ public class JFrame extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    @Override
+    public void paintComponents(Graphics g) {
+        super.paintComponents(g);
+    }
+
+    
+    
     @Override
     public void paint(Graphics g) {
         Image image = createImage(this.getWidth(), this.getHeight());
@@ -128,7 +135,10 @@ public class JFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame().setVisible(true);
+                JFrame jf = new JFrame();
+                jf.setResizable(false);
+                jf.setVisible(true);
+                
             }
         });
 

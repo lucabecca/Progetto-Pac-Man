@@ -25,28 +25,40 @@ public class ThreadMovimentoPacman extends Thread {
 
     @Override
     public void run() {
-        while (c.isGameOver() == false) {
+        while (true) {
+
+            while (c.isGameOver() == false) {
+                try {
+
+                    if (pm.getDirezione() == 'w') {
+                        pm.subY(velocita);
+                    } else if (pm.getDirezione() == 'a') {
+                        pm.subX(velocita);
+                    } else if (pm.getDirezione() == 's') {
+                        pm.addY(velocita);
+                    } else if (pm.getDirezione() == 'd') {
+                        pm.addX(velocita);
+                    }
+
+                    // Controlla l'intersezione
+                    if (pm.intersects(fan)) {
+                        c.setGameOver(true);
+                    }
+
+                    sleep(10);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ThreadMovimentoPacman.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            // Ogni 500ms controlla se GameOver è false
             try {
-                
-                if (pm.getDirezione() == 'w') {
-                    pm.subY(velocita);
-                } else if (pm.getDirezione() == 'a') {
-                    pm.subX(velocita);
-                } else if (pm.getDirezione() == 's') {
-                    pm.addY(velocita);
-                } else if (pm.getDirezione() == 'd') {
-                    pm.addX(velocita);
-                }
-
-                // Controlla l'intersezione
-                if (pm.intersects(fan)) {
-                    c.setGameOver(true);
-                }
-
-                sleep(10);
+                sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ThreadMovimentoPacman.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
     }
 }
