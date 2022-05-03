@@ -14,6 +14,7 @@ public class JFrame extends javax.swing.JFrame {
     boolean gameOver;
     ThreadMovimentoPacman tt;
     Condivisa c;
+    Mappa mappa;
 
     /**
      * Creates new form JFrame
@@ -28,6 +29,10 @@ public class JFrame extends javax.swing.JFrame {
 
         // Crea il giocatore
         pacMan = new PacMan(Color.blue, c);
+        // Crea la mappa
+        mappa = new Mappa();
+        mappa.trovaCancelletto();
+        mappa.crea();
         // e il thread per il suo movimento
         tt = new ThreadMovimentoPacman(pacMan, fan1, c);
         tt.start();
@@ -57,6 +62,11 @@ public class JFrame extends javax.swing.JFrame {
         Graphics graphics = image.getGraphics();
         graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
 
+        for(Rectangle r: mappa.rettangoli){
+            graphics.setColor(Color.green);
+            graphics.fillRect(r.x, r.y, r.width, r.height);
+        }
+        
         pacMan.draw(graphics);
         fan1.draw(graphics);
 

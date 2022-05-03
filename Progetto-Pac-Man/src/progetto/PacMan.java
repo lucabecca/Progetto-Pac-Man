@@ -114,7 +114,7 @@ public class PacMan extends Rectangle {
         g.setPaint(tp);
         */
 
-        g.drawImage(image, this.x, this.y, this.width, this.height, null);
+        //g.drawImage(image, this.x, this.y, this.width, this.height, null);
     }
 
 }
