@@ -19,11 +19,14 @@ import java.util.Scanner;
  * @author Giordano
  */
 class Mappa extends Rectangle {
+    //un quadrato deve essere 50x50
+    //la mappa deve partire in alto a sinistra
+    
     String filename = "";
     ArrayList<String> mappa = new ArrayList<String>();
     ArrayList<Rectangle> rettangoli= new ArrayList<Rectangle>();
-    private int aumentoX = 40;
-    private int aumentoY = 40;
+    private int aumentoX = 55;
+    private int aumentoY = 55;
     private int posX = aumentoX;
     private int posY = aumentoY;
     

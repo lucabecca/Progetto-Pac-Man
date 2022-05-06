@@ -85,36 +85,9 @@ public class PacMan extends Rectangle {
 
     public void draw(Graphics g) {
         g.setColor(this.color);
+        //Image i = TextureManager.getTexture(1);
+        //g.drawImage(i, x, y, null);
         g.fillRect(this.x, this.y, this.width, this.height);
-
-        /*
-        [Texture in base alla direzione]
-        
-        BufferedImage image = right1;
-
-        switch (direzione) {
-            case 'w':
-                image = right1;
-                break;
-            case 'a':
-                image = right1;
-                break;
-            case 's':
-                image = right1;
-                break;
-            case 'd':
-                image = right1;
-                break;
-            default:
-                image = right1;
-                break;
-        }
-        
-        TexturePaint tp = new TexturePaint(image, this);
-        g.setPaint(tp);
-        */
-
-        //g.drawImage(image, this.x, this.y, this.width, this.height, null);
     }
 
 }

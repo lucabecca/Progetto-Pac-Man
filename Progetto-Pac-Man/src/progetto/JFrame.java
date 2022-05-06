@@ -12,7 +12,8 @@ public class JFrame extends javax.swing.JFrame {
     PacMan pacMan;
     Fantasma fan1;
     boolean gameOver;
-    ThreadMovimentoPacman tt;
+    ThreadMovimentoPacman tmp;
+    ThreadMovimentoFantasma tmf;
     Condivisa c;
     Mappa mappa;
 
@@ -25,17 +26,21 @@ public class JFrame extends javax.swing.JFrame {
         c = new Condivisa();
 
         // Crea il fantasma1
-        fan1 = new Fantasma(400, 300, Color.red);
+        fan1 = new Fantasma(Color.red, c);
+        // e il thread per il suo movimento
+        tmf = new ThreadMovimentoFantasma(fan1, c);
+        tmf.start();
 
         // Crea il giocatore
         pacMan = new PacMan(Color.blue, c);
+        // e il thread per il suo movimento
+        tmp = new ThreadMovimentoPacman(pacMan, fan1, c);
+        tmp.start();
+        
         // Crea la mappa
         mappa = new Mappa();
         mappa.trovaCancelletto();
         mappa.crea();
-        // e il thread per il suo movimento
-        tt = new ThreadMovimentoPacman(pacMan, fan1, c);
-        tt.start();
 
         // Se il giocatore ha perso
         gameOver = false;
