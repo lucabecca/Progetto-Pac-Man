@@ -5,9 +5,14 @@
  */
 package progetto;
 
+import java.awt.Rectangle;
+import java.util.ArrayList;
+
 public class Condivisa {
 
     private boolean GameOver;
+    
+    private ArrayList<Rectangle> muraMappa= new ArrayList<Rectangle>();
 
     public Condivisa() {
         GameOver = false;
@@ -21,4 +26,14 @@ public class Condivisa {
         this.GameOver = GameOver;
     }
 
+    public ArrayList<Rectangle> getMuraMappa() {
+        return muraMappa;
+    }
+
+    public void setMuraMappa(ArrayList<Rectangle> muraMappa) {
+        this.muraMappa = muraMappa;
+    }
+
+    
+    
 }

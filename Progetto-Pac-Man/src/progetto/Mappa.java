@@ -5,9 +5,6 @@
  */
 package progetto;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.List;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,27 +18,30 @@ import java.util.Scanner;
 class Mappa extends Rectangle {
     //un quadrato deve essere 50x50
     //la mappa deve partire in alto a sinistra
-    
+
     String filename = "";
-    ArrayList<String> mappa = new ArrayList<String>();
-    ArrayList<Rectangle> rettangoli= new ArrayList<Rectangle>();
+    private ArrayList<String> mappa = new ArrayList<String>();
+    private ArrayList<Rectangle> rettangoli = new ArrayList<Rectangle>();
     private int aumentoX = 55;
     private int aumentoY = 55;
     private int posX = aumentoX;
     private int posY = aumentoY;
-    
+
+    Condivisa c;
+
     //costruttore, prende un file e lo legge
-    public Mappa(){
+    public Mappa(Condivisa c) {
         filename = "./src/textures/mappe/file1.txt";
+        this.c = c;
         readFile();
     }
-    private void readFile(){
-        
+
+    private void readFile() {
 
         try {
             File myObj = new File(filename);
             Scanner myReader = new Scanner(myObj);
-            
+
             //mappa = new String[myReader. ]
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -55,23 +55,24 @@ class Mappa extends Rectangle {
             e.printStackTrace();
         }
     }
-    
-    public void trovaCancelletto(){
-        for(String map: mappa){
-            for(int i = 0; i< map.length(); i++){
-                if(map.charAt(i)=='#')
-                    //disegna
+
+    public void trovaCancelletto() {
+        for (String map : mappa) {
+            for (int i = 0; i < map.length(); i++) {
+                if (map.charAt(i) == '#') //disegna
+                {
                     System.out.println("disegno siepe");
+                }
             }
         }
     }
-    
+
     public void crea() {
-        
-        for(String map: mappa){
+
+        for (String map : mappa) {
             posX = aumentoX;
-            for(int i = 0; i< map.length(); i++){
-                if(map.charAt(i)=='#'){
+            for (int i = 0; i < map.length(); i++) {
+                if (map.charAt(i) == '#') {
                     //disegna
                     System.out.println("entro");
                     //g.setColor(Color.green);
@@ -82,6 +83,7 @@ class Mappa extends Rectangle {
             }
             posY += aumentoY;
         }
+        c.setMuraMappa(rettangoli);
     }
 
 }

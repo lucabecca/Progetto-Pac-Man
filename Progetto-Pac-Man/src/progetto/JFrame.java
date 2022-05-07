@@ -22,8 +22,14 @@ public class JFrame extends javax.swing.JFrame {
      */
     public JFrame() {
         initComponents();
+        
         //Creo condivisa
         c = new Condivisa();
+        
+        // Crea la mappa
+        mappa = new Mappa(c);
+        mappa.trovaCancelletto();
+        mappa.crea();
 
         // Crea il fantasma1
         fan1 = new Fantasma(Color.red, c);
@@ -36,11 +42,6 @@ public class JFrame extends javax.swing.JFrame {
         // e il thread per il suo movimento
         tmp = new ThreadMovimentoPacman(pacMan, fan1, c);
         tmp.start();
-        
-        // Crea la mappa
-        mappa = new Mappa();
-        mappa.trovaCancelletto();
-        mappa.crea();
 
         // Se il giocatore ha perso
         gameOver = false;
@@ -67,7 +68,7 @@ public class JFrame extends javax.swing.JFrame {
         Graphics graphics = image.getGraphics();
         graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        for(Rectangle r: mappa.rettangoli){
+        for(Rectangle r: c.getMuraMappa()){
             graphics.setColor(Color.green);
             graphics.fillRect(r.x, r.y, r.width, r.height);
         }
