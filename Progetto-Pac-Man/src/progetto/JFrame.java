@@ -6,6 +6,7 @@
 package progetto;
 
 import java.awt.*;
+import javax.swing.JLabel;
 
 public class JFrame extends javax.swing.JFrame {
 
@@ -53,6 +54,8 @@ public class JFrame extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
         this.setVisible(true);
+        this.setMaximizedBounds(new Rectangle(0,0,1000,1000));
+        
     }
 
     @Override

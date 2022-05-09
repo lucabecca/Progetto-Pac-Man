@@ -24,8 +24,8 @@ class Mappa extends Rectangle {
     private ArrayList<Rectangle> rettangoli = new ArrayList<Rectangle>();
     private int aumentoX = 55;
     private int aumentoY = 55;
-    private int posX = aumentoX;
-    private int posY = aumentoY;
+    private int posX = 5;
+    private int posY = 30;
 
     Condivisa c;
 
@@ -68,15 +68,12 @@ class Mappa extends Rectangle {
     }
 
     public void crea() {
-
+        
         for (String map : mappa) {
-            posX = aumentoX;
+            posX = 5;
             for (int i = 0; i < map.length(); i++) {
                 if (map.charAt(i) == '#') {
-                    //disegna
                     System.out.println("entro");
-                    //g.setColor(Color.green);
-                    //g.fillRect(posX, posY, 30, 30);
                     rettangoli.add(new Rectangle(posX, posY, 60, 60));
                 }
                 posX += aumentoX;

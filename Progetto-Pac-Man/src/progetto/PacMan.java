@@ -16,7 +16,7 @@ public class PacMan extends Rectangle {
     private char direzionePrec = ' ';
 
     private int initialX = 100;
-    private int initialY = 300;
+    private int initialY = 255;
 
     public BufferedImage right1;
 
@@ -83,22 +83,22 @@ public class PacMan extends Rectangle {
         boolean controlla = false;
         switch (direzione) {
             case 'w':
-                if (ThreadPac.ControllaCollisioniW()) {
+                if (ThreadPac.collisione.ControllaCollisioniSopra()) {
                     controlla = true;
                 }
                 break;
             case 'a':
-                if (ThreadPac.ControllaCollisioniA()) {
+                if (ThreadPac.collisione.ControllaCollisioniSinistra()) {
                     controlla = true;
                 }
                 break;
             case 's':
-                if (ThreadPac.ControllaCollisioniS()) {
+                if (ThreadPac.collisione.ControllaCollisioniSotto()) {
                     controlla = true;
                 }
                 break;
             case 'd':
-                if (ThreadPac.ControllaCollisioniD()) {
+                if (ThreadPac.collisione.ControllaCollisioniDestra()) {
                     controlla = true;
                 }
                 break;

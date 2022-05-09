@@ -20,6 +20,7 @@ public class ThreadMovimentoPacman extends Thread {
     private Fantasma fan;
 
     Condivisa c;
+    Collisione collisione; 
 
     ArrayList<Rectangle> muraMappa;
 
@@ -29,24 +30,22 @@ public class ThreadMovimentoPacman extends Thread {
         this.c = c;
         this.muraMappa = c.getMuraMappa();
         this.pm.setThreadPac(this);
+        collisione = new Collisione(c, pm, velocita);
     }
 
     @Override
     public void run() {
         while (true) {
-
             while (c.isGameOver() == false) {
-
                 try {
-
                     // ControllaCollisioni*() 
-                    if (pm.getDirezione() == 'w' && ControllaCollisioniW()) {
+                    if (pm.getDirezione() == 'w' && collisione.ControllaCollisioniSopra()) {
                         pm.subY(velocita);
-                    } else if (pm.getDirezione() == 'a' && ControllaCollisioniA()) {
+                    } else if (pm.getDirezione() == 'a' && collisione.ControllaCollisioniSinistra()) {
                         pm.subX(velocita);
-                    } else if (pm.getDirezione() == 's' && ControllaCollisioniS()) {
+                    } else if (pm.getDirezione() == 's' && collisione.ControllaCollisioniSotto()) {
                         pm.addY(velocita);
-                    } else if (pm.getDirezione() == 'd' && ControllaCollisioniD()) {
+                    } else if (pm.getDirezione() == 'd' && collisione.ControllaCollisioniDestra()) {
                         pm.addX(velocita);
                     }
 
@@ -70,56 +69,5 @@ public class ThreadMovimentoPacman extends Thread {
             }
 
         }
-    }
-
-    public boolean ControllaCollisioniW() {
-        boolean tmpControlla = true;
-        for (Rectangle r : muraMappa) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMinX(), (int) pm.getMinY() - ofsetPixelCollisioni) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMaxX(), (int) pm.getMinY() - ofsetPixelCollisioni)) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-
-    public boolean ControllaCollisioniA() {
-        boolean tmpControlla = true;
-        for (Rectangle r : muraMappa) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMinX() - ofsetPixelCollisioni, (int) pm.getMinY()) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMinX() - ofsetPixelCollisioni, (int) pm.getMaxY())) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-
-    public boolean ControllaCollisioniS() {
-        boolean tmpControlla = true;
-        for (Rectangle r : muraMappa) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMinX(), (int) pm.getMaxY() + ofsetPixelCollisioni) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMaxX(), (int) pm.getMaxY() + ofsetPixelCollisioni)) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-
-    public boolean ControllaCollisioniD() {
-        boolean tmpControlla = true;
-        for (Rectangle r : muraMappa) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMaxX() + ofsetPixelCollisioni, (int) pm.getMaxY()) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) pm.getMaxX() + ofsetPixelCollisioni, (int) pm.getMinY())) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-
-    public boolean PuntoInRect(int xSottoSinista, int ySottoSinistra, int xSopraDestra, int ySopraDestra, int xPunto, int yPunto) {
-        if (xPunto > xSottoSinista && xPunto < xSopraDestra && yPunto < ySottoSinistra && yPunto > ySopraDestra) {
-            return true;
-        }
-        return false;
     }
 }

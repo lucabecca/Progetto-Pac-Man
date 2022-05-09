@@ -15,8 +15,8 @@ public class Fantasma extends Rectangle {
     Color color;
     private int direzione = ' ';
 
-    private int initialX = 400;
-    private int initialY = 300;
+    private int initialX = 310;
+    private int initialY = 255;
 
     Condivisa c;
 
