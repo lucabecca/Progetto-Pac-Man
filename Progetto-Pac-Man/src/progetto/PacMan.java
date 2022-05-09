@@ -40,6 +40,7 @@ public class PacMan extends Rectangle {
         this.x = initialX;
         this.y = initialY;
         direzione = ' ';
+        direzionePrec = ' ';
         getImmaginePacMan();
         c.setGameOver(false);
     }
