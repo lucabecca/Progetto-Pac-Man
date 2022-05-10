@@ -30,6 +30,12 @@ public class PacMan extends Rectangle {
         this.height = 50;
         this.color = color;
         resetGame();
+        setPosizione();
+    }
+    
+    public void setPosizione(){
+        initialX = 100;
+        initialY = 255;
     }
 
     public void setThreadPac(ThreadMovimentoPacman ThreadPac) {

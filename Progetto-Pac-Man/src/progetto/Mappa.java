@@ -24,14 +24,14 @@ class Mappa extends Rectangle {
     private ArrayList<Rectangle> rettangoli = new ArrayList<Rectangle>();
     private int aumentoX = 55;
     private int aumentoY = 55;
-    private int posX = 5;
+    private int posX;
     private int posY = 30;
 
     Condivisa c;
 
     //costruttore, prende un file e lo legge
     public Mappa(Condivisa c) {
-        filename = "./src/textures/mappe/file1.txt";
+        filename = "./src/textures/mappe/mappa1.txt";
         this.c = c;
         readFile();
     }
@@ -68,7 +68,6 @@ class Mappa extends Rectangle {
     }
 
     public void crea() {
-        
         for (String map : mappa) {
             posX = 5;
             for (int i = 0; i < map.length(); i++) {
