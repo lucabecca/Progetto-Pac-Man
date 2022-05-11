@@ -89,22 +89,22 @@ public class PacMan extends Rectangle {
         boolean controlla = false;
         switch (direzione) {
             case 'w':
-                if (ThreadPac.collisione.ControllaCollisioniSopra()) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX(), (int) this.getMinX() - ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() -ThreadPac.getOffsetPixelCollisioni())) {
                     controlla = true;
                 }
                 break;
             case 'a':
-                if (ThreadPac.collisione.ControllaCollisioniSinistra()) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX() -ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() -ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX())) {
                     controlla = true;
                 }
                 break;
             case 's':
-                if (ThreadPac.collisione.ControllaCollisioniSotto()) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX(), (int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni())) {
                     controlla = true;
                 }
                 break;
             case 'd':
-                if (ThreadPac.collisione.ControllaCollisioniDestra()) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX())) {
                     controlla = true;
                 }
                 break;

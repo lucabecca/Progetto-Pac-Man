@@ -11,16 +11,25 @@ import java.awt.Rectangle;
  * @author Giordano
  */
 public class Collisione {
+
     private Condivisa c;
-    private Rectangle r; 
-    private int offsetPixelCollisioni;
-    
-    public Collisione(Condivisa c, Rectangle type, int velocita){
+    private Rectangle r;
+
+    public Collisione(Condivisa c, Rectangle type) {
         this.c = c;
         r = type;
-        offsetPixelCollisioni = velocita;
     }
-    
+
+    public boolean ControllaCollisioni(int xP1, int yP1, int xP2, int yP2) {
+        for (Rectangle r : c.getMuraMappa()) {
+            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), xP1, yP1) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), xP2, yP2)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /*
     public boolean ControllaCollisioniSopra() {
         boolean tmpControlla = true;
         for (Rectangle r : c.getMuraMappa()) {
@@ -64,7 +73,8 @@ public class Collisione {
         }
         return tmpControlla;
     }
-   
+    */
+    
     public boolean PuntoInRect(int xSottoSinista, int ySottoSinistra, int xSopraDestra, int ySopraDestra, int xPunto, int yPunto) {
         if (xPunto > xSottoSinista && xPunto < xSopraDestra && yPunto < ySottoSinistra && yPunto > ySopraDestra) {
             return true;

@@ -6,7 +6,6 @@
 package progetto;
 
 import java.awt.*;
-import javax.swing.JLabel;
 
 public class JFrame extends javax.swing.JFrame {
 

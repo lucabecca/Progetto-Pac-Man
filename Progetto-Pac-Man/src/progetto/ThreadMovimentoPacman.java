@@ -15,12 +15,12 @@ public class ThreadMovimentoPacman extends Thread {
 
     private int velocita = 1;
 
-    private int ofsetPixelCollisioni = velocita;
+    private int offsetPixelCollisioni = velocita;
 
     private Fantasma fan;
 
     Condivisa c;
-    Collisione collisione; 
+    Collisione collisione;
 
     ArrayList<Rectangle> muraMappa;
 
@@ -30,22 +30,26 @@ public class ThreadMovimentoPacman extends Thread {
         this.c = c;
         this.muraMappa = c.getMuraMappa();
         this.pm.setThreadPac(this);
-        collisione = new Collisione(c, pm, velocita);
+        collisione = new Collisione(c, pm);
     }
 
+    public int getOffsetPixelCollisioni() {
+        return offsetPixelCollisioni;
+    }
+    
     @Override
     public void run() {
         while (true) {
             while (c.isGameOver() == false) {
                 try {
                     // ControllaCollisioni*() 
-                    if (pm.getDirezione() == 'w' && collisione.ControllaCollisioniSopra()) {
+                    if (pm.getDirezione() == 'w' && collisione.ControllaCollisioni((int) pm.getMinX(), (int) pm.getMinY() - offsetPixelCollisioni, (int) pm.getMaxX(), (int) pm.getMinY() - offsetPixelCollisioni)) {
                         pm.subY(velocita);
-                    } else if (pm.getDirezione() == 'a' && collisione.ControllaCollisioniSinistra()) {
+                    } else if (pm.getDirezione() == 'a' && collisione.ControllaCollisioni((int) pm.getMinX() - offsetPixelCollisioni, (int) pm.getMinY(), (int) pm.getMinX() - offsetPixelCollisioni, (int) pm.getMaxY())) {
                         pm.subX(velocita);
-                    } else if (pm.getDirezione() == 's' && collisione.ControllaCollisioniSotto()) {
+                    } else if (pm.getDirezione() == 's' && collisione.ControllaCollisioni((int) pm.getMinX(), (int) pm.getMaxY() + offsetPixelCollisioni, (int) pm.getMaxX(), (int) pm.getMaxY() + offsetPixelCollisioni)) {
                         pm.addY(velocita);
-                    } else if (pm.getDirezione() == 'd' && collisione.ControllaCollisioniDestra()) {
+                    } else if (pm.getDirezione() == 'd' && collisione.ControllaCollisioni((int) pm.getMaxX() + offsetPixelCollisioni, (int) pm.getMaxY(), (int) pm.getMaxX() + offsetPixelCollisioni, (int) pm.getMinY())) {
                         pm.addX(velocita);
                     }
 

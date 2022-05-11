@@ -5,9 +5,7 @@
  */
 package progetto;
 
-import java.awt.Rectangle;
 import static java.lang.Thread.sleep;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +18,7 @@ public class ThreadMovimentoFantasma extends Thread{
     private int velocita = 5;
 
     private Fantasma fan;
-    private int ofsetPixelCollisioni = velocita;
+    private int offsetPixelCollisioni = velocita;
     Condivisa c;
     Collisione collisione;
     private int direzione = -1;
@@ -28,7 +26,7 @@ public class ThreadMovimentoFantasma extends Thread{
     public ThreadMovimentoFantasma( Fantasma fan, Condivisa c) {
         this.fan = fan;
         this.c = c;
-        collisione = new Collisione(c, fan, velocita);
+        collisione = new Collisione(c, fan);
     }
 
     @Override
@@ -45,25 +43,25 @@ public class ThreadMovimentoFantasma extends Thread{
                     
                     switch(direzione){
                         case 0: 
-                            if (collisione.ControllaCollisioniSopra())
+                            if (collisione.ControllaCollisioni((int) fan.getMinX(), (int) fan.getMinY() - offsetPixelCollisioni, (int) fan.getMaxX(), (int) fan.getMinY() - offsetPixelCollisioni))
                                 fan.subY(velocita);
                             else
                                 direzione = -1;
                         break;
                         case 1: 
-                            if (collisione.ControllaCollisioniSinistra())
+                            if (collisione.ControllaCollisioni((int) fan.getMinX() - offsetPixelCollisioni, (int) fan.getMinY(), (int) fan.getMinX() - offsetPixelCollisioni, (int) fan.getMaxY()))
                                 fan.subX(velocita);
                             else
                                 direzione = -1;
                         break;
                         case 2: 
-                            if (collisione.ControllaCollisioniSotto())
+                            if (collisione.ControllaCollisioni((int) fan.getMinX(), (int) fan.getMaxY() + offsetPixelCollisioni, (int) fan.getMaxX(), (int) fan.getMaxY() + offsetPixelCollisioni))
                                 fan.addY(velocita);
                             else
                                 direzione = -1;
                         break;
                         case 3: 
-                            if (collisione.ControllaCollisioniDestra())
+                            if (collisione.ControllaCollisioni((int) fan.getMaxX() + offsetPixelCollisioni, (int) fan.getMaxY(), (int) fan.getMaxX() + offsetPixelCollisioni, (int) fan.getMinY()))
                                 fan.addX(velocita);
                             else
                                 direzione = -1;
