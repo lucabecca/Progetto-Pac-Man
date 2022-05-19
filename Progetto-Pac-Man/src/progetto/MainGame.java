@@ -24,10 +24,10 @@ public class MainGame extends javax.swing.JFrame {
         initComponents();
         jSlider1.setValue(1);
         setComboBox();
-        jComboBox1.addActionListener(new ActionListener() {
+        mappa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    cambioImmagine(jComboBox1.getSelectedItem().toString());
+                    cambioImmagine(mappa.getSelectedItem().toString());
                 } catch (IOException ex) {
                     Logger.getLogger(MainGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -46,10 +46,8 @@ public class MainGame extends javax.swing.JFrame {
 
         BufferedImage myPicture = ImageIO.read(new File(percorso + item));
         jLabel2.setIcon(new ImageIcon(myPicture));
-        /*picLabel.setBounds(10, 10, 400, 400);
-        picLabel.setVisible(true);*/
+        
         System.out.println("cambio immagine " + (percorso + item));
-        //visualizzazione mappa (immagine) al click sul comboBox --> visualizzo nel jPanel (?)
     }
 
     @SuppressWarnings("unchecked")
@@ -59,10 +57,10 @@ public class MainGame extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jFrame1 = new javax.swing.JFrame();
         jFrame2 = new javax.swing.JFrame();
-        jButton1 = new javax.swing.JButton();
+        avviaGioco = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        numeroFantasmini = new javax.swing.JLabel();
+        mappa = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -89,10 +87,10 @@ public class MainGame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Avvia gioco");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        avviaGioco.setText("Avvia gioco");
+        avviaGioco.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                avviaGiocoMouseClicked(evt);
             }
         });
 
@@ -104,11 +102,11 @@ public class MainGame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("1");
+        numeroFantasmini.setText("1");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        mappa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                mappaActionPerformed(evt);
             }
         });
 
@@ -120,15 +118,15 @@ public class MainGame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(334, 334, 334)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(numeroFantasmini, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(281, 281, 281)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
+                            .addComponent(avviaGioco)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(299, 299, 299)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mappa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -138,15 +136,15 @@ public class MainGame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mappa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(numeroFantasmini)
                 .addGap(20, 20, 20)
-                .addComponent(jButton1)
+                .addComponent(avviaGioco)
                 .addGap(0, 102, Short.MAX_VALUE))
         );
 
@@ -166,31 +164,37 @@ public class MainGame extends javax.swing.JFrame {
         };
 
         files = cartella.list(filter);
-
         for (String file : files) {
-            jComboBox1.addItem(file);
+            mappa.addItem(file);
         }
-
+        
+        try{
+            cambioImmagine(mappa.getItemAt(0));
+        }catch(Exception e){
+            
+        }
     }
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void avviaGiocoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avviaGiocoMouseClicked
         // TODO add your handling code here:
         // controlla immagine
 
         // Faccio partire il file JFrame (TEMPORANEO solo per avviare)
-        JFrame jf = new JFrame();
+        
+        JFrame jf = new JFrame(Integer.parseInt(numeroFantasmini.getText()));
+        //jf.setFantasmini(numeroFantasmini.getText());
         jf.setResizable(false);
         jf.setVisible(true);
         this.hide();
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_avviaGiocoMouseClicked
 
     private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
-        jLabel1.setText(Integer.toString(jSlider1.getValue()));
+        numeroFantasmini.setText(Integer.toString(jSlider1.getValue()));
     }//GEN-LAST:event_jSlider1MouseDragged
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void mappaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mappaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_mappaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,13 +232,13 @@ public class MainGame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton avviaGioco;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSlider jSlider1;
+    private javax.swing.JComboBox<String> mappa;
+    private javax.swing.JLabel numeroFantasmini;
     // End of variables declaration//GEN-END:variables
 }

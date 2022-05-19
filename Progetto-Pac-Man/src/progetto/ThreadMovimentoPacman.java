@@ -18,6 +18,7 @@ public class ThreadMovimentoPacman extends Thread {
     private int offsetPixelCollisioni = velocita;
 
     private Fantasma fan1;
+    private Fantasma []fantasmi;
 
     Condivisa c;
 
@@ -25,9 +26,11 @@ public class ThreadMovimentoPacman extends Thread {
 
     ArrayList<Rectangle> muraMappa;
 
-    public ThreadMovimentoPacman(PacMan pm, Fantasma fan1, Condivisa c) {
+    public ThreadMovimentoPacman(PacMan pm, Fantasma[] fantasmi, Condivisa c) {
+        System.out.println("prova");
         this.pm = pm;
-        this.fan1 = fan1;
+        this.fantasmi = fantasmi;
+        //this.fan1 = fan1;
         this.c = c;
         this.muraMappa = c.getMuraMappa();
         this.pm.setThreadPac(this);
@@ -56,15 +59,15 @@ public class ThreadMovimentoPacman extends Thread {
                     }
 
                     // Controlla l'intersezione con fantasma
-                    if (pm.intersects(fan1)) {
-                        c.setGameOver(true);
+                    for(Fantasma fantasma: fantasmi){
+                        if (pm.intersects(fantasma)) {
+                            c.setGameOver(true);
+                        }
                     }
-
                     sleep(10);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ThreadMovimentoPacman.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
 
             // Ogni 500ms controlla se GameOver è false

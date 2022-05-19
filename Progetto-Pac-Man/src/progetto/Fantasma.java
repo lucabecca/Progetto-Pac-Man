@@ -97,5 +97,4 @@ public class Fantasma extends Rectangle {
         //g.setColor(this.color);
         //g.fillRect(this.x, this.y, this.width, this.height);
     }
-
 }

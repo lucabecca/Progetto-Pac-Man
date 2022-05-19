@@ -6,26 +6,31 @@
 package progetto;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class JFrame extends javax.swing.JFrame {
     
     PacMan pacMan;
+    Fantasma[] fantasmi;
+    ThreadMovimentoFantasma[] movimenti;
+    
     Fantasma fan1;
     ThreadMovimentoPacman tmp;
     ThreadMovimentoFantasma tmf1;
+    
     Condivisa c;
     Mappa mappa;
     TextureManager txm;
-
+    int numeroFantasmini;
     /**
      * Creates new form JFrame
      */
-    public JFrame() {
+    public JFrame(int fantasmi) {
         initComponents();
 
         // Creo gestore texture
         txm = new TextureManager();
-
+        this.numeroFantasmini = fantasmi;
         //Creo condivisa
         c = new Condivisa(txm);
 
@@ -33,17 +38,18 @@ public class JFrame extends javax.swing.JFrame {
         mappa = new Mappa(c);
         mappa.trovaCancelletto();
         mappa.crea();
-
+        setFantasmi();
+        
         // Crea il fantasma1
-        fan1 = new Fantasma(c, 4);
+        /*fan1 = new Fantasma(c, 4);
         // e il thread per il suo movimento
         tmf1 = new ThreadMovimentoFantasma(fan1, c);
         tmf1.start();
-
+        */
         // Crea il giocatore
         pacMan = new PacMan(c);
         // e il thread per il suo movimento
-        tmp = new ThreadMovimentoPacman(pacMan, fan1, c);
+        tmp = new ThreadMovimentoPacman(pacMan, this.fantasmi, c);
         tmp.start();
 
         // Avvio il thread che aggiorna la pagina
@@ -75,7 +81,11 @@ public class JFrame extends javax.swing.JFrame {
         }
         
         pacMan.draw(graphics);
-        fan1.draw(graphics);
+        
+        for(Fantasma fantasma: fantasmi){
+            fantasma.draw(graphics);
+        }
+        //fan1.draw(graphics);
         
         g.drawImage(image, 0, 0, this);
     }
@@ -126,6 +136,18 @@ public class JFrame extends javax.swing.JFrame {
             pacMan.assegnaDirezione(tastoPremuto);
         }
     }//GEN-LAST:event_formKeyPressed
+
+    void setFantasmi() {
+        System.out.println("creazione dei fantasmi");
+        fantasmi = new Fantasma[numeroFantasmini];
+        movimenti = new ThreadMovimentoFantasma[numeroFantasmini];
+        
+        for(int i=0; i<numeroFantasmini; i++){
+            fantasmi[i] = new Fantasma(c, i+1);
+            movimenti[i] = new ThreadMovimentoFantasma(fantasmi[i], c);
+            movimenti[i].start();
+        }
+    }
 
     /**
      * @param args the command line arguments
