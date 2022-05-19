@@ -17,26 +17,28 @@ public class ThreadMovimentoPacman extends Thread {
 
     private int offsetPixelCollisioni = velocita;
 
-    private Fantasma fan;
+    private Fantasma fan1;
 
     Condivisa c;
+
     Collisione collisione;
 
     ArrayList<Rectangle> muraMappa;
 
-    public ThreadMovimentoPacman(PacMan pm, Fantasma fan, Condivisa c) {
+    public ThreadMovimentoPacman(PacMan pm, Fantasma fan1, Condivisa c) {
         this.pm = pm;
-        this.fan = fan;
+        this.fan1 = fan1;
         this.c = c;
         this.muraMappa = c.getMuraMappa();
         this.pm.setThreadPac(this);
         collisione = new Collisione(c, pm);
+        this.pm.setPosizione();
     }
 
     public int getOffsetPixelCollisioni() {
         return offsetPixelCollisioni;
     }
-    
+
     @Override
     public void run() {
         while (true) {
@@ -54,7 +56,7 @@ public class ThreadMovimentoPacman extends Thread {
                     }
 
                     // Controlla l'intersezione con fantasma
-                    if (pm.intersects(fan)) {
+                    if (pm.intersects(fan1)) {
                         c.setGameOver(true);
                     }
 

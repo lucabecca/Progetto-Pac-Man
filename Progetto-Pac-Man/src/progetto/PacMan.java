@@ -6,49 +6,57 @@
 package progetto;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
 public class PacMan extends Rectangle {
 
-    Color color;
     private char direzione = ' ';
     private char direzionePrec = ' ';
 
-    private int initialX = 100;
-    private int initialY = 255;
+    private int initialX;
+    private int initialY;
 
-    public BufferedImage right1;
+    private int contatoreTextureAperto = 0;
+    private int contatoreTextureChiuso = 0;
 
     Condivisa c;
 
     private ThreadMovimentoPacman ThreadPac;
 
-    PacMan(Color color, Condivisa c) {
+    PacMan(Condivisa c) {
         this.c = c;
         this.width = 50;
         this.height = 50;
-        this.color = color;
+
         resetGame();
-        setPosizione();
     }
-    
-    public void setPosizione(){
-        initialX = 100;
-        initialY = 255;
+
+    public void setPosizione() {
+        boolean collide = true;
+        do {
+            if (ThreadPac.collisione.ControllaCollisioni(initialX, initialY, initialX + 50, initialY + 50)) {
+                collide = false;
+
+            } else {
+                initialX++;
+                if (ThreadPac.collisione.ControllaCollisioni(initialX, initialY, initialX + 50, initialY + 50)) {
+                    collide = false;
+                } else {
+                    initialY++;
+                }
+            }
+            resetGame();
+        } while (collide == true);
+    }
+
+    public void resetGame() {
+        direzione = ' ';
+        direzionePrec = ' ';
+        this.x = initialX;
+        this.y = initialY;
     }
 
     public void setThreadPac(ThreadMovimentoPacman ThreadPac) {
         this.ThreadPac = ThreadPac;
-    }
-
-    public void resetGame() {
-        this.x = initialX;
-        this.y = initialY;
-        direzione = ' ';
-        direzionePrec = ' ';
-        getImmaginePacMan();
-        c.setGameOver(false);
     }
 
     @Override
@@ -89,27 +97,24 @@ public class PacMan extends Rectangle {
         boolean controlla = false;
         switch (direzione) {
             case 'w':
-                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX(), (int) this.getMinX() - ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() -ThreadPac.getOffsetPixelCollisioni())) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX(), (int) this.getMinY() - ThreadPac.getOffsetPixelCollisioni(), (int) this.getMaxX(), (int) this.getMinY() - ThreadPac.getOffsetPixelCollisioni())) {
                     controlla = true;
                 }
                 break;
             case 'a':
-                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX() -ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() -ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX())) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX() - ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinY(), (int) this.getMinX() - ThreadPac.getOffsetPixelCollisioni(), (int) this.getMaxY())) {
                     controlla = true;
                 }
                 break;
             case 's':
-                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX(), (int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni())) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX(), (int) this.getMaxY() + ThreadPac.getOffsetPixelCollisioni(), (int) this.getMaxX(), (int) this.getMaxY() + ThreadPac.getOffsetPixelCollisioni())) {
                     controlla = true;
                 }
                 break;
             case 'd':
-                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX(), (int) this.getMinX() +ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinX())) {
+                if (ThreadPac.collisione.ControllaCollisioni((int) this.getMaxX() + ThreadPac.getOffsetPixelCollisioni(), (int) this.getMaxY(), (int) this.getMaxX() + ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinY())) {
                     controlla = true;
                 }
-                break;
-            case 'r':
-                resetGame();
                 break;
             default:
                 System.out.println("Tasto non riconosciuto");
@@ -124,19 +129,80 @@ public class PacMan extends Rectangle {
         }
     }
 
-    public void getImmaginePacMan() {
-        try {
-            right1 = ImageIO.read(getClass().getResourceAsStream("/src/textures/PacMan/PacMan_1.png"));
-        } catch (Exception e) {
-
-        }
-    }
-
     public void draw(Graphics g) {
-        g.setColor(this.color);
-        //Image i = TextureManager.getTexture(1);
-        //g.drawImage(i, x, y, null);
-        g.fillRect(this.x, this.y, this.width, this.height);
+        int texture = 0;
+        // Velocita chiusura e apertura bocca (+ grande = + lento)
+        int nTextureDiSeguito = 8;
+
+        if (c.isGameOver() == false) {
+            Image image;
+            switch (direzione) {
+                case 'w':
+                    if (contatoreTextureAperto >= nTextureDiSeguito) {
+                        texture = 0;
+                        if (contatoreTextureChiuso >= nTextureDiSeguito) {
+                            contatoreTextureAperto = 0;
+                            contatoreTextureChiuso = 0;
+                        } else {
+                            contatoreTextureChiuso++;
+                        }
+                    } else {
+                        contatoreTextureAperto++;
+                        texture = 4;
+                    }
+                    break;
+                case 'a':
+                    if (contatoreTextureAperto >= nTextureDiSeguito) {
+                        texture = 0;
+                        if (contatoreTextureChiuso >= nTextureDiSeguito) {
+                            contatoreTextureAperto = 0;
+                            contatoreTextureChiuso = 0;
+                        } else {
+                            contatoreTextureChiuso++;
+                        }
+                    } else {
+                        contatoreTextureAperto++;
+                        texture = 3;
+                    }
+                    break;
+                case 's':
+                    if (contatoreTextureAperto >= nTextureDiSeguito) {
+                        texture = 0;
+                        if (contatoreTextureChiuso >= nTextureDiSeguito) {
+                            contatoreTextureAperto = 0;
+                            contatoreTextureChiuso = 0;
+                        } else {
+                            contatoreTextureChiuso++;
+                        }
+                    } else {
+                        contatoreTextureAperto++;
+                        texture = 2;
+                    }
+                    break;
+                case 'd':
+                    if (contatoreTextureAperto >= nTextureDiSeguito) {
+                        texture = 0;
+                        if (contatoreTextureChiuso >= nTextureDiSeguito) {
+                            contatoreTextureAperto = 0;
+                            contatoreTextureChiuso = 0;
+                        } else {
+                            contatoreTextureChiuso++;
+                        }
+                    } else {
+                        contatoreTextureAperto++;
+                        texture = 1;
+                    }
+                    break;
+                default:
+                    texture = 0;
+                    break;
+            }
+            image = c.getTexPacMan(texture);
+            g.drawImage(image, x, y, null);
+        }
+
+        //g.setColor(this.color);
+        //g.fillRect(this.x, this.y, this.width, this.height);
     }
 
 }

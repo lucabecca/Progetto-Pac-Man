@@ -27,6 +27,9 @@ class Mappa extends Rectangle {
     private int posX;
     private int posY = 30;
 
+    int righeMappa = 0;
+    int colonneMappa = 0;
+
     Condivisa c;
 
     //costruttore, prende un file e lo legge
@@ -58,13 +61,16 @@ class Mappa extends Rectangle {
 
     public void trovaCancelletto() {
         for (String map : mappa) {
+            righeMappa++;
             for (int i = 0; i < map.length(); i++) {
+                colonneMappa++;
                 if (map.charAt(i) == '#') //disegna
                 {
                     System.out.println("disegno siepe");
                 }
             }
         }
+        colonneMappa = colonneMappa / righeMappa;
     }
 
     public void crea() {
@@ -72,7 +78,6 @@ class Mappa extends Rectangle {
             posX = 5;
             for (int i = 0; i < map.length(); i++) {
                 if (map.charAt(i) == '#') {
-                    System.out.println("entro");
                     rettangoli.add(new Rectangle(posX, posY, 60, 60));
                 }
                 posX += aumentoX;
@@ -80,6 +85,14 @@ class Mappa extends Rectangle {
             posY += aumentoY;
         }
         c.setMuraMappa(rettangoli);
+    }
+
+    public int getAltezza() {
+        return righeMappa * c.getAltezzaEntità();
+    }
+
+    public int getLarghezza() {
+        return colonneMappa * c.getLarghezzaEntità();
     }
 
 }

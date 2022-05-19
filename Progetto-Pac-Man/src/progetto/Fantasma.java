@@ -5,34 +5,38 @@
  */
 package progetto;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 public class Fantasma extends Rectangle {
 
-    Color color;
-    private int direzione = ' ';
+    private int direzione = 0;
 
     private int initialX = 310;
-    private int initialY = 255;
+    private int initialY = 200;
+
+    int idFan;
 
     Condivisa c;
 
-    Fantasma(Color color, Condivisa c) {
+    Fantasma(Condivisa c, int idFantasma) {
         this.c = c;
-        this.width = 50;
-        this.height = 50;
-        this.color = color;
-        resetGame();
+        if (idFantasma >= 1 && idFantasma <= 6) {
+            this.width = 50;
+            this.height = 50;
+            this.idFan = idFantasma;
+            resetGame();
+        } else {
+            c.setGameOver(true);
+            System.out.println("idFantasma non presente, inserire un numero tra 1 e 6 come id");
+        }
     }
 
     public void resetGame() {
         this.x = initialX;
         this.y = initialY;
-        direzione = ' ';
-        c.setGameOver(false);
+        direzione = 0;
     }
 
     @Override
@@ -67,11 +71,31 @@ public class Fantasma extends Rectangle {
 
     public void assegnaDirezione() {
         direzione = Utility.RandomRange(0, 3);
+        System.out.println("La direzione del fantasma è " + direzione);
     }
 
     public void draw(Graphics g) {
-        g.setColor(this.color);
-        g.fillRect(this.x, this.y, this.width, this.height);
+        Image image;
+        switch (direzione) {
+            case 'w':
+                image = c.getTexFan(idFan, 3);
+                break;
+            case 'a':
+                image = c.getTexFan(idFan, 2);
+                break;
+            case 's':
+                image = c.getTexFan(idFan, 1);
+                break;
+            case 'd':
+                image = c.getTexFan(idFan, 0);
+                break;
+            default:
+                image = c.getTexFan(idFan, 0);
+                break;
+        }
+        g.drawImage(image, x, y, null);
+        //g.setColor(this.color);
+        //g.fillRect(this.x, this.y, this.width, this.height);
     }
 
 }

@@ -8,76 +8,75 @@ package progetto;
 import java.awt.*;
 
 public class JFrame extends javax.swing.JFrame {
-
+    
     PacMan pacMan;
     Fantasma fan1;
-    boolean gameOver;
     ThreadMovimentoPacman tmp;
-    ThreadMovimentoFantasma tmf;
+    ThreadMovimentoFantasma tmf1;
     Condivisa c;
     Mappa mappa;
+    TextureManager txm;
 
     /**
      * Creates new form JFrame
      */
     public JFrame() {
         initComponents();
-        
+
+        // Creo gestore texture
+        txm = new TextureManager();
+
         //Creo condivisa
-        c = new Condivisa();
-        
+        c = new Condivisa(txm);
+
         // Crea la mappa
         mappa = new Mappa(c);
         mappa.trovaCancelletto();
         mappa.crea();
 
         // Crea il fantasma1
-        fan1 = new Fantasma(Color.red, c);
+        fan1 = new Fantasma(c, 4);
         // e il thread per il suo movimento
-        tmf = new ThreadMovimentoFantasma(fan1, c);
-        tmf.start();
+        tmf1 = new ThreadMovimentoFantasma(fan1, c);
+        tmf1.start();
 
         // Crea il giocatore
-        pacMan = new PacMan(Color.blue, c);
+        pacMan = new PacMan(c);
         // e il thread per il suo movimento
         tmp = new ThreadMovimentoPacman(pacMan, fan1, c);
         tmp.start();
 
-        // Se il giocatore ha perso
-        gameOver = false;
-
         // Avvio il thread che aggiorna la pagina
         ThreadRepaint tp = new ThreadRepaint(this);
         tp.start();
-
+        
+        this.setBackground(Color.BLACK);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600, 600);
+        this.setSize(mappa.getLarghezza() + 100, mappa.getAltezza() + 100);
         this.setVisible(true);
-        this.setMaximizedBounds(new Rectangle(0,0,1000,1000));
+        this.setMaximizedBounds(new Rectangle(0, 0, 1000, 1000));
         
     }
-
+    
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
     }
-
-    
     
     @Override
     public void paint(Graphics g) {
         Image image = createImage(this.getWidth(), this.getHeight());
         Graphics graphics = image.getGraphics();
         graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
-
-        for(Rectangle r: c.getMuraMappa()){
-            graphics.setColor(Color.green);
+        
+        for (Rectangle r : c.getMuraMappa()) {
+            graphics.setColor(Color.blue);
             graphics.fillRect(r.x, r.y, r.width, r.height);
         }
         
         pacMan.draw(graphics);
         fan1.draw(graphics);
-
+        
         g.drawImage(image, 0, 0, this);
     }
 
@@ -119,25 +118,32 @@ public class JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyReleased
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        System.out.println(evt.getKeyChar());
-        pacMan.assegnaDirezione(evt.getKeyChar());
+        char tastoPremuto = evt.getKeyChar();
+        if (tastoPremuto == 'r') {
+            c.resetGame(pacMan, fan1);
+        } else {
+            System.out.println(tastoPremuto);
+            pacMan.assegnaDirezione(tastoPremuto);
+        }
     }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
      */
-    /*public static void main(String args[]) {
+    
+    /*
+    public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame jf = new JFrame();
                 jf.setResizable(false);
                 jf.setVisible(true);
-                
             }
         });
-
-    }*/
+        
+    }
+    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
