@@ -11,9 +11,12 @@ import java.util.ArrayList;
 
 public class Condivisa {
 
+    private int PuntiPerVincere = 0;
+
     private boolean GameOver;
 
     private ArrayList<Rectangle> muraMappa = new ArrayList<Rectangle>();
+    private ArrayList<Rectangle> palliniGialli = new ArrayList<Rectangle>();
 
     private TextureManager txm;
 
@@ -32,6 +35,7 @@ public class Condivisa {
         txm.loadFantasma(4);
         txm.loadFantasma(5);
         txm.loadFantasma(6);
+        txm.loadPallinoGiallo();
 
         altezzaEntità = txm.getAltezzaEntità();
         larghezzaEntità = txm.getLarghezzaEntità();
@@ -55,6 +59,15 @@ public class Condivisa {
         this.muraMappa = muraMappa;
     }
 
+    public ArrayList<Rectangle> getPalliniGialli() {
+        return palliniGialli;
+    }
+
+    public void setPalliniGialli(ArrayList<Rectangle> palliniGialli) {
+        this.palliniGialli = palliniGialli;
+        PuntiPerVincere = this.palliniGialli.size();
+    }
+
     Image getTexPacMan(int i) {
         return txm.getTexPacMan(i);
     }
@@ -71,10 +84,14 @@ public class Condivisa {
         return larghezzaEntità;
     }
 
-    public void resetGame(PacMan pm,Fantasma fan1) {
+    public void resetGame(PacMan pm, Fantasma fan1) {
         pm.resetGame();
         fan1.resetGame();
         GameOver = false;
+    }
+
+    public Image getTexPalliniGialli() {
+         return txm.getTexPalliniGialli();
     }
 
 }

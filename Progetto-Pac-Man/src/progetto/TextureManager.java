@@ -37,6 +37,8 @@ public class TextureManager {
 
     ArrayList<BufferedImage> texFanViola;
 
+    BufferedImage textPallinoGiallo;
+
     public TextureManager() {
         texPacMan = new ArrayList<BufferedImage>();
         texFanBlu = new ArrayList<BufferedImage>();
@@ -95,7 +97,6 @@ public class TextureManager {
                         texFanMarrone.add(tmpImg.getSubimage(x, y, larghezzaEntità, altezzaEntità));
                         x += 50;
                     }
-                    System.out.println("caricato e diviso");
                     break;
                 case 3:
                     //Carico l'immagine completa FantasmaRosa
@@ -153,8 +154,25 @@ public class TextureManager {
         }
     }
 
+    public void loadPallinoGiallo() {
+        BufferedImage tmImage;
+        try {
+            tmImage = ImageIO.read(new File("./src/textures/PallinoGiallo/PallinoGiallo.png"));
+
+            //Carico l'immagine completa
+            textPallinoGiallo = tmImage.getSubimage(0, 0, 60, 60);
+
+        } catch (IOException ex) {
+            Logger.getLogger(TextureManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public Image getTexPacMan(int posizione) {
         return texPacMan.get(posizione);
+    }
+
+    public Image getTexPalliniGialli() {
+        return textPallinoGiallo;
     }
 
     Image getTexFan(int idFan, int i) {
@@ -187,5 +205,5 @@ public class TextureManager {
     public int getLarghezzaEntità() {
         return larghezzaEntità;
     }
- 
+
 }

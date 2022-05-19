@@ -6,22 +6,22 @@
 package progetto;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class JFrame extends javax.swing.JFrame {
-    
+
     PacMan pacMan;
     Fantasma[] fantasmi;
     ThreadMovimentoFantasma[] movimenti;
-    
+
     Fantasma fan1;
     ThreadMovimentoPacman tmp;
     ThreadMovimentoFantasma tmf1;
-    
+
     Condivisa c;
     Mappa mappa;
     TextureManager txm;
     int numeroFantasmini;
+
     /**
      * Creates new form JFrame
      */
@@ -39,13 +39,13 @@ public class JFrame extends javax.swing.JFrame {
         mappa.trovaCancelletto();
         mappa.crea();
         setFantasmi();
-        
+
         // Crea il fantasma1
         /*fan1 = new Fantasma(c, 4);
         // e il thread per il suo movimento
         tmf1 = new ThreadMovimentoFantasma(fan1, c);
         tmf1.start();
-        */
+         */
         // Crea il giocatore
         pacMan = new PacMan(c);
         // e il thread per il suo movimento
@@ -55,38 +55,45 @@ public class JFrame extends javax.swing.JFrame {
         // Avvio il thread che aggiorna la pagina
         ThreadRepaint tp = new ThreadRepaint(this);
         tp.start();
-        
+
         this.setBackground(Color.BLACK);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(mappa.getLarghezza() + 100, mappa.getAltezza() + 100);
+        this.setSize(mappa.getLarghezza(), mappa.getAltezza());
         this.setVisible(true);
         this.setMaximizedBounds(new Rectangle(0, 0, 1000, 1000));
-        
+
     }
-    
+
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
     }
-    
+
     @Override
     public void paint(Graphics g) {
         Image image = createImage(this.getWidth(), this.getHeight());
         Graphics graphics = image.getGraphics();
         graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
-        
+
         for (Rectangle r : c.getMuraMappa()) {
             graphics.setColor(Color.blue);
             graphics.fillRect(r.x, r.y, r.width, r.height);
         }
-        
+
+        Image tmpPalliniGialli;
+        for (Rectangle r : c.getPalliniGialli()) {
+            //graphics.setColor(Color.red);
+            //graphics.fillRect(r.x, r.y, r.width, r.height);
+            graphics.drawImage(c.getTexPalliniGialli(), r.x, r.y, null);
+        }
+
         pacMan.draw(graphics);
-        
-        for(Fantasma fantasma: fantasmi){
+
+        for (Fantasma fantasma : fantasmi) {
             fantasma.draw(graphics);
         }
         //fan1.draw(graphics);
-        
+
         g.drawImage(image, 0, 0, this);
     }
 
@@ -141,9 +148,9 @@ public class JFrame extends javax.swing.JFrame {
         System.out.println("creazione dei fantasmi");
         fantasmi = new Fantasma[numeroFantasmini];
         movimenti = new ThreadMovimentoFantasma[numeroFantasmini];
-        
-        for(int i=0; i<numeroFantasmini; i++){
-            fantasmi[i] = new Fantasma(c, i+1);
+
+        for (int i = 0; i < numeroFantasmini; i++) {
+            fantasmi[i] = new Fantasma(c, i + 1);
             movimenti[i] = new ThreadMovimentoFantasma(fantasmi[i], c);
             movimenti[i].start();
         }
@@ -152,7 +159,6 @@ public class JFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
     /*
     public static void main(String args[]) {
         
@@ -165,7 +171,7 @@ public class JFrame extends javax.swing.JFrame {
         });
         
     }
-    */
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -12,8 +12,8 @@ public class PacMan extends Rectangle {
     private char direzione = ' ';
     private char direzionePrec = ' ';
 
-    private int initialX;
-    private int initialY;
+    private int initialX = 10;
+    private int initialY = 33;
 
     private int contatoreTextureAperto = 0;
     private int contatoreTextureChiuso = 0;
@@ -33,19 +33,18 @@ public class PacMan extends Rectangle {
     public void setPosizione() {
         boolean collide = true;
         do {
-            if (ThreadPac.collisione.ControllaCollisioni(initialX, initialY, initialX + 50, initialY + 50)) {
+            if (ThreadPac.collisione.ControllaCollisioni(initialX, initialY + 50, initialX + 50, initialY)) {
                 collide = false;
-
             } else {
                 initialX++;
-                if (ThreadPac.collisione.ControllaCollisioni(initialX, initialY, initialX + 50, initialY + 50)) {
+                if (ThreadPac.collisione.ControllaCollisioni(initialX, initialY + 50, initialX + 50, initialY)) {
                     collide = false;
                 } else {
                     initialY++;
                 }
             }
-            resetGame();
         } while (collide == true);
+        resetGame();
     }
 
     public void resetGame() {

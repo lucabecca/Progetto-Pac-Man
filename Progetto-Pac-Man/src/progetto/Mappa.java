@@ -21,14 +21,17 @@ class Mappa extends Rectangle {
 
     String filename = "";
     private ArrayList<String> mappa = new ArrayList<String>();
-    private ArrayList<Rectangle> rettangoli = new ArrayList<Rectangle>();
+    private ArrayList<Rectangle> mura = new ArrayList<Rectangle>();
+    private ArrayList<Rectangle> palliniGialli = new ArrayList<Rectangle>();
     private int aumentoX = 55;
-    private int aumentoY = 55;
+    private int aumentoY = aumentoX;
     private int posX;
-    private int posY = 30;
+    private int posY = 31;
+    private int AltezzaEntitaMappa = 60;
+    private int LarghezzaEntitàMappa = AltezzaEntitaMappa;
 
-    int righeMappa = 0;
-    int colonneMappa = 0;
+    private int righeMappa = 0;
+    private int colonneMappa = 0;
 
     Condivisa c;
 
@@ -66,7 +69,9 @@ class Mappa extends Rectangle {
                 colonneMappa++;
                 if (map.charAt(i) == '#') //disegna
                 {
-                    System.out.println("disegno siepe");
+                    System.out.println("disegno muro");
+                } else if (map.charAt(i) == '0') {
+                    System.out.println("disegno pallino giallo");
                 }
             }
         }
@@ -75,24 +80,28 @@ class Mappa extends Rectangle {
 
     public void crea() {
         for (String map : mappa) {
-            posX = 5;
+            posX = 8;
             for (int i = 0; i < map.length(); i++) {
                 if (map.charAt(i) == '#') {
-                    rettangoli.add(new Rectangle(posX, posY, 60, 60));
+                    mura.add(new Rectangle(posX, posY, AltezzaEntitaMappa, LarghezzaEntitàMappa));
+                } else if (map.charAt(i) == '0') {
+                    palliniGialli.add(new Rectangle(posX, posY, AltezzaEntitaMappa, LarghezzaEntitàMappa));
                 }
+
                 posX += aumentoX;
             }
             posY += aumentoY;
         }
-        c.setMuraMappa(rettangoli);
+        c.setMuraMappa(mura);
+        c.setPalliniGialli(palliniGialli);
     }
 
     public int getAltezza() {
-        return righeMappa * c.getAltezzaEntità();
+        return righeMappa * AltezzaEntitaMappa;
     }
 
     public int getLarghezza() {
-        return colonneMappa * c.getLarghezzaEntità();
+        return colonneMappa * LarghezzaEntitàMappa;
     }
 
 }
