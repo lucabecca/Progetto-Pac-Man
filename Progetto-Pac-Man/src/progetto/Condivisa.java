@@ -84,9 +84,8 @@ public class Condivisa {
         return larghezzaEntità;
     }
 
-    public void resetGame(PacMan pm, Fantasma fan1) {
+    public void resetGame(PacMan pm) {
         pm.resetGame();
-        fan1.resetGame();
         GameOver = false;
     }
 

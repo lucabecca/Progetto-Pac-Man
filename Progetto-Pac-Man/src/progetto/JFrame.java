@@ -80,19 +80,17 @@ public class JFrame extends javax.swing.JFrame {
             graphics.fillRect(r.x, r.y, r.width, r.height);
         }
 
-        Image tmpPalliniGialli;
         for (Rectangle r : c.getPalliniGialli()) {
             //graphics.setColor(Color.red);
             //graphics.fillRect(r.x, r.y, r.width, r.height);
             graphics.drawImage(c.getTexPalliniGialli(), r.x, r.y, null);
         }
 
-        pacMan.draw(graphics);
+        /*pacMan.draw(graphics);
 
         for (Fantasma fantasma : fantasmi) {
             fantasma.draw(graphics);
-        }
-        //fan1.draw(graphics);
+        }*/
 
         g.drawImage(image, 0, 0, this);
     }
@@ -137,7 +135,7 @@ public class JFrame extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         char tastoPremuto = evt.getKeyChar();
         if (tastoPremuto == 'r') {
-            c.resetGame(pacMan, fan1);
+            c.resetGame(pacMan);
         } else {
             System.out.println(tastoPremuto);
             pacMan.assegnaDirezione(tastoPremuto);

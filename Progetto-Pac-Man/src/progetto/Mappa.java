@@ -26,7 +26,7 @@ class Mappa extends Rectangle {
     private int aumentoX = 55;
     private int aumentoY = aumentoX;
     private int posX;
-    private int posY = 31;
+    private int posY = 30;
     private int AltezzaEntitaMappa = 60;
     private int LarghezzaEntitàMappa = AltezzaEntitaMappa;
 
@@ -80,7 +80,7 @@ class Mappa extends Rectangle {
 
     public void crea() {
         for (String map : mappa) {
-            posX = 8;
+            posX = 5;
             for (int i = 0; i < map.length(); i++) {
                 if (map.charAt(i) == '#') {
                     mura.add(new Rectangle(posX, posY, AltezzaEntitaMappa, LarghezzaEntitàMappa));
