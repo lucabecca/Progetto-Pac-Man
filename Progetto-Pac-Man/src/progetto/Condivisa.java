@@ -13,10 +13,12 @@ public class Condivisa {
 
     private int PuntiPerVincere = 0;
 
+    private int Punti = 0;
+
     private boolean GameOver;
 
     private ArrayList<Rectangle> muraMappa = new ArrayList<Rectangle>();
-    private ArrayList<Rectangle> palliniGialli = new ArrayList<Rectangle>();
+    private ArrayList<Pallino> palliniGialli = new ArrayList<Pallino>();
 
     private TextureManager txm;
 
@@ -25,6 +27,7 @@ public class Condivisa {
 
     private int initialXPacMan;
     private int initialYPacMan;
+    private boolean Win;
 
     public Condivisa(TextureManager txm) {
         this.txm = txm;
@@ -41,6 +44,7 @@ public class Condivisa {
         larghezzaEntità = txm.getLarghezzaEntità();
 
         GameOver = false;
+        Win = false;
     }
 
     public boolean isGameOver() {
@@ -59,11 +63,11 @@ public class Condivisa {
         this.muraMappa = muraMappa;
     }
 
-    public ArrayList<Rectangle> getPalliniGialli() {
+    public ArrayList<Pallino> getPalliniGialli() {
         return palliniGialli;
     }
 
-    public void setPalliniGialli(ArrayList<Rectangle> palliniGialli) {
+    public void setPalliniGialli(ArrayList<Pallino> palliniGialli) {
         this.palliniGialli = palliniGialli;
         PuntiPerVincere = this.palliniGialli.size();
     }
@@ -90,7 +94,48 @@ public class Condivisa {
     }
 
     public Image getTexPalliniGialli() {
-         return txm.getTexPalliniGialli();
+        return txm.getTexPalliniGialli();
+    }
+
+    public int getPuntiPerVincere() {
+        return PuntiPerVincere;
+    }
+
+    public void setPuntiPerVincere(int PuntiPerVincere) {
+        this.PuntiPerVincere = PuntiPerVincere;
+    }
+
+    public int getPunti() {
+        return Punti;
+    }
+
+    public void setPunti(int Punti) {
+        this.Punti = Punti;
+    }
+
+    public boolean isWin() {
+        return Win;
+    }
+
+    public void setWin(boolean Win) {
+        this.Win = Win;
+    }
+
+    public void aggiungiPunto() {
+        if (Punti < PuntiPerVincere - 1) {
+            Punti++;
+        } else {
+            System.out.println("lasjfdlkasdf");
+            Win = true;
+        }
+    }
+
+    public boolean isPassato(Pallino pallino) {
+        return pallino.isPassato();
+    }
+
+    public void setPassato(Pallino pallino, boolean b) {
+        pallino.setPassato(b);
     }
 
 }

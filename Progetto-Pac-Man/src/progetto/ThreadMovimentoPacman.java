@@ -18,7 +18,7 @@ public class ThreadMovimentoPacman extends Thread {
     private int offsetPixelCollisioni = velocita;
 
     private Fantasma fan1;
-    private Fantasma []fantasmi;
+    private Fantasma[] fantasmi;
 
     Condivisa c;
 
@@ -45,7 +45,7 @@ public class ThreadMovimentoPacman extends Thread {
     @Override
     public void run() {
         while (true) {
-            while (c.isGameOver() == false) {
+            while (c.isGameOver() == false && c.isWin() == false) {
                 try {
                     // ControllaCollisioni*() 
                     if (pm.getDirezione() == 'w' && collisione.ControllaCollisioni((int) pm.getMinX(), (int) pm.getMinY() - offsetPixelCollisioni, (int) pm.getMaxX(), (int) pm.getMinY() - offsetPixelCollisioni)) {
@@ -58,8 +58,14 @@ public class ThreadMovimentoPacman extends Thread {
                         pm.addX(velocita);
                     }
 
+                    // Controlla collisione con pallini
+                    if (collisione.ControllaCollisioniPallinoGiallo((int) pm.getMinX(), (int) pm.getMaxY(), (int) pm.getMaxX(), (int) pm.getMinY())) {
+                        c.aggiungiPunto();
+                        System.out.println("I punti sono " + c.getPunti());
+                    }
+
                     // Controlla l'intersezione con fantasma
-                    for(Fantasma fantasma: fantasmi){
+                    for (Fantasma fantasma : fantasmi) {
                         if (pm.intersects(fantasma)) {
                             c.setGameOver(true);
                         }

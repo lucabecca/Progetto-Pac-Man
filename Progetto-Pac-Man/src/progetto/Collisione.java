@@ -21,7 +21,7 @@ public class Collisione {
     }
 
     public boolean ControllaCollisioni(int xP1, int yP1, int xP2, int yP2) {
-        
+
         for (Rectangle mura : c.getMuraMappa()) {
             if (PuntoInRect((int) mura.getMinX(), (int) mura.getMaxY(), (int) mura.getMaxX(), (int) mura.getMinY(), xP1, yP1) || PuntoInRect((int) mura.getMinX(), (int) mura.getMaxY(), (int) mura.getMaxX(), (int) mura.getMinY(), xP2, yP2)) {
                 return false;
@@ -29,15 +29,16 @@ public class Collisione {
         }
         return true;
     }
+
     public boolean PuntoInRect(int xSottoSinista, int ySottoSinistra, int xSopraDestra, int ySopraDestra, int xPunto, int yPunto) {
         if (xPunto > xSottoSinista && xPunto < xSopraDestra && yPunto < ySottoSinistra && yPunto > ySopraDestra) {
             return true;
         }
         return false;
     }
-    
+
     public boolean ControllaCollisioniIniziale(int xP1, int yP1, int xP2, int yP2) {
-        
+
         for (Rectangle mura : c.getMuraMappa()) {
             if (PuntoInRectIniziale((int) mura.getMinX(), (int) mura.getMaxY(), (int) mura.getMaxX(), (int) mura.getMinY(), xP1, yP1) || PuntoInRectIniziale((int) mura.getMinX(), (int) mura.getMaxY(), (int) mura.getMaxX(), (int) mura.getMinY(), xP2, yP2)) {
                 return false;
@@ -45,6 +46,7 @@ public class Collisione {
         }
         return true;
     }
+
     public boolean PuntoInRectIniziale(int xSottoSinista, int ySottoSinistra, int xSopraDestra, int ySopraDestra, int xPunto, int yPunto) {
         if (xPunto >= xSottoSinista && xPunto <= xSopraDestra && yPunto <= ySottoSinistra && yPunto >= ySopraDestra) {
             return true;
@@ -52,51 +54,15 @@ public class Collisione {
         return false;
     }
 
-    /*
-    public boolean ControllaCollisioniSopra() {
-        boolean tmpControlla = true;
-        for (Rectangle r : c.getMuraMappa()) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMinX(), (int) this.r.getMinY() - offsetPixelCollisioni) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMaxX(), (int) this.r.getMinY() - offsetPixelCollisioni)) {
-                tmpControlla = false;
-                break;
+    boolean ControllaCollisioniPallinoGiallo(int xSottoSinista, int ySottoSinista, int xSopraDestra, int ySopraDestra) {
+        for (Pallino pallino : c.getPalliniGialli()) {
+            if (PuntoInRect((int) xSottoSinista, (int) ySottoSinista, (int) xSopraDestra, (int) ySopraDestra, (int) pallino.getMinX()+30, (int) pallino.getMinY()+30) && pallino.isPassato() == false) {
+                c.setPassato(pallino, true);
+                return true;
             }
         }
-        return tmpControlla;
+
+        return false;
     }
 
-    public boolean ControllaCollisioniSinistra() {
-        boolean tmpControlla = true;
-        for (Rectangle r : c.getMuraMappa()) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMinX() - offsetPixelCollisioni, (int) this.r.getMinY()) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMinX() - offsetPixelCollisioni, (int) this.r.getMaxY())) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-
-    public boolean ControllaCollisioniSotto() {
-        boolean tmpControlla = true;
-        for (Rectangle r : c.getMuraMappa()) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMinX(), (int) this.r.getMaxY() + offsetPixelCollisioni) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMaxX(), (int) this.r.getMaxY() + offsetPixelCollisioni)) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-
-    public boolean ControllaCollisioniDestra() {
-        boolean tmpControlla = true;
-        for (Rectangle r : c.getMuraMappa()) {
-            if (PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMaxX() + offsetPixelCollisioni, (int) this.r.getMaxY()) || PuntoInRect((int) r.getMinX(), (int) r.getMaxY(), (int) r.getMaxX(), (int) r.getMinY(), (int) this.r.getMaxX() + offsetPixelCollisioni, (int) this.r.getMinY())) {
-                tmpControlla = false;
-                break;
-            }
-        }
-        return tmpControlla;
-    }
-    */
-    
-    
 }

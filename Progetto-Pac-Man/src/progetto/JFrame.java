@@ -80,17 +80,29 @@ public class JFrame extends javax.swing.JFrame {
             graphics.fillRect(r.x, r.y, r.width, r.height);
         }
 
-        for (Rectangle r : c.getPalliniGialli()) {
+        for (Pallino p : c.getPalliniGialli()) {
             //graphics.setColor(Color.red);
             //graphics.fillRect(r.x, r.y, r.width, r.height);
-            graphics.drawImage(c.getTexPalliniGialli(), r.x, r.y, null);
+            p.draw(graphics);
         }
 
-        /*pacMan.draw(graphics);
+        pacMan.draw(graphics);
 
         for (Fantasma fantasma : fantasmi) {
             fantasma.draw(graphics);
-        }*/
+        }
+
+        // Sctitta Perso
+        if(c.isGameOver()){
+            txm.loadScrittaPerso();
+            graphics.drawImage(txm.getScrittaPerso(), mappa.getLarghezza() / 2 - txm.getScrittaPerso().getWidth(null) / 2, mappa.getAltezza() / 2 - txm.getScrittaPerso().getHeight(null) / 2, null);
+        }
+        
+        // Scritta Vinto
+        if (c.isWin()) {
+            txm.loadScrittaVittoria();
+            graphics.drawImage(txm.getScrittaVittoria(), mappa.getLarghezza() / 2 - txm.getScrittaVittoria().getWidth(null) / 2, mappa.getAltezza() / 2 - txm.getScrittaVittoria().getHeight(null) / 2, null);
+        }
 
         g.drawImage(image, 0, 0, this);
     }
@@ -134,7 +146,7 @@ public class JFrame extends javax.swing.JFrame {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         char tastoPremuto = evt.getKeyChar();
-        if (tastoPremuto == 'r') {
+        if (tastoPremuto == 'r' && c.isWin()==false) {
             c.resetGame(pacMan);
         } else {
             System.out.println(tastoPremuto);

@@ -23,21 +23,25 @@ public class TextureManager {
 
     final int nAnimazioniFantasma = 4;
 
-    ArrayList<BufferedImage> texFanBlu;
+    private ArrayList<BufferedImage> texFanBlu;
 
-    ArrayList<BufferedImage> texFanMarrone;
+    private ArrayList<BufferedImage> texFanMarrone;
 
-    ArrayList<BufferedImage> texFanRosa;
+    private ArrayList<BufferedImage> texFanRosa;
 
-    ArrayList<BufferedImage> texFanRosso;
+    private ArrayList<BufferedImage> texFanRosso;
 
-    ArrayList<BufferedImage> texPacMan;
+    private ArrayList<BufferedImage> texPacMan;
 
-    ArrayList<BufferedImage> texFanVerde;
+    private ArrayList<BufferedImage> texFanVerde;
 
-    ArrayList<BufferedImage> texFanViola;
+    private ArrayList<BufferedImage> texFanViola;
 
-    BufferedImage textPallinoGiallo;
+    private BufferedImage textPallinoGiallo;
+    
+    private BufferedImage scrittaVittoria;
+    
+    private BufferedImage scrittaPerso;
 
     public TextureManager() {
         texPacMan = new ArrayList<BufferedImage>();
@@ -204,6 +208,34 @@ public class TextureManager {
 
     public int getLarghezzaEntità() {
         return larghezzaEntità;
+    }
+
+    public void loadScrittaVittoria() {
+        try {
+            //Carico l'immagine completa
+            scrittaVittoria = ImageIO.read(new File("./src/textures/ScrittaVittoria/ScrittaVittoria.png"));
+
+        } catch (IOException ex) {
+            Logger.getLogger(TextureManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Image getScrittaVittoria() {
+        return scrittaVittoria;
+    }
+
+    public void loadScrittaPerso() {
+        try {
+            //Carico l'immagine completa
+            scrittaPerso = ImageIO.read(new File("./src/textures/ScrittaPerso/ScrittaPerso.png"));
+
+        } catch (IOException ex) {
+            Logger.getLogger(TextureManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Image getScrittaPerso() {
+        return scrittaPerso;
     }
 
 }

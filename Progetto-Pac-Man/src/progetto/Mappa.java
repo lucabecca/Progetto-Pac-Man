@@ -22,7 +22,7 @@ class Mappa extends Rectangle {
     String filename = "";
     private ArrayList<String> mappa = new ArrayList<String>();
     private ArrayList<Rectangle> mura = new ArrayList<Rectangle>();
-    private ArrayList<Rectangle> palliniGialli = new ArrayList<Rectangle>();
+    private ArrayList<Pallino> palliniGialli = new ArrayList<Pallino>();
     private int aumentoX = 55;
     private int aumentoY = aumentoX;
     private int posX;
@@ -85,7 +85,7 @@ class Mappa extends Rectangle {
                 if (map.charAt(i) == '#') {
                     mura.add(new Rectangle(posX, posY, AltezzaEntitaMappa, LarghezzaEntitàMappa));
                 } else if (map.charAt(i) == '0') {
-                    palliniGialli.add(new Rectangle(posX, posY, AltezzaEntitaMappa, LarghezzaEntitàMappa));
+                    palliniGialli.add(new Pallino(c, posX, posY, AltezzaEntitaMappa, LarghezzaEntitàMappa));
                 }
 
                 posX += aumentoX;

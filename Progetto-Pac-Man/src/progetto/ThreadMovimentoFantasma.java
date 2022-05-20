@@ -32,7 +32,7 @@ public class ThreadMovimentoFantasma extends Thread{
     @Override
     public void run() {
         while (true) {
-            while (c.isGameOver() == false) {
+            while (c.isGameOver() == false && c.isWin() == false) {
                 //da fare: quando il fantasmino va in una direzione, continua in quella fino a quando non collide
                 try {
                     //quando direzione = -1 deve essere riassegnata, vuol dire che il fantasmino:

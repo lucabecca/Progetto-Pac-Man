@@ -76,25 +76,28 @@ public class Fantasma extends Rectangle {
 
     public void draw(Graphics g) {
         Image image;
-        switch (direzione) {
-            case 'w':
-                image = c.getTexFan(idFan, 3);
-                break;
-            case 'a':
-                image = c.getTexFan(idFan, 2);
-                break;
-            case 's':
-                image = c.getTexFan(idFan, 1);
-                break;
-            case 'd':
-                image = c.getTexFan(idFan, 0);
-                break;
-            default:
-                image = c.getTexFan(idFan, 0);
-                break;
+        if (c.isGameOver() == false && c.isWin() == false) {
+            switch (direzione) {
+                case 'w':
+                    image = c.getTexFan(idFan, 3);
+                    break;
+                case 'a':
+                    image = c.getTexFan(idFan, 2);
+                    break;
+                case 's':
+                    image = c.getTexFan(idFan, 1);
+                    break;
+                case 'd':
+                    image = c.getTexFan(idFan, 0);
+                    break;
+                default:
+                    image = c.getTexFan(idFan, 0);
+                    break;
+            }
+
+            g.drawImage(image, x, y, null);
+            //g.setColor(this.color);
+            //g.fillRect(this.x, this.y, this.width, this.height);
         }
-        g.drawImage(image, x, y, null);
-        //g.setColor(this.color);
-        //g.fillRect(this.x, this.y, this.width, this.height);
     }
 }

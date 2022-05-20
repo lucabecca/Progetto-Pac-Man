@@ -93,6 +93,7 @@ public class PacMan extends Rectangle {
     }
 
     public void assegnaDirezione(char direzione) {
+        int numeroControlloMossa = 10;
         boolean controlla = false;
         switch (direzione) {
             case 'w':
@@ -110,6 +111,7 @@ public class PacMan extends Rectangle {
                     controlla = true;
                 }
                 break;
+
             case 'd':
                 if (ThreadPac.collisione.ControllaCollisioni((int) this.getMaxX() + ThreadPac.getOffsetPixelCollisioni(), (int) this.getMaxY(), (int) this.getMaxX() + ThreadPac.getOffsetPixelCollisioni(), (int) this.getMinY())) {
                     controlla = true;
@@ -133,7 +135,7 @@ public class PacMan extends Rectangle {
         // Velocita chiusura e apertura bocca (+ grande = + lento)
         int nTextureDiSeguito = 8;
 
-        if (c.isGameOver() == false) {
+        if (c.isGameOver() == false && c.isWin() == false) {
             Image image;
             switch (direzione) {
                 case 'w':
