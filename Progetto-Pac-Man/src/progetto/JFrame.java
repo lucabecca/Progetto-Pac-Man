@@ -25,7 +25,7 @@ public class JFrame extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
-    public JFrame(int fantasmi) {
+    public JFrame(int fantasmi,MainGame maingame) {
         initComponents();
 
         // Creo gestore texture
@@ -35,7 +35,7 @@ public class JFrame extends javax.swing.JFrame {
         c = new Condivisa(txm);
 
         // Crea la mappa
-        mappa = new Mappa(c);
+        mappa = new Mappa(c,maingame);
         mappa.trovaCancelletto();
         mappa.crea();
         setFantasmi();

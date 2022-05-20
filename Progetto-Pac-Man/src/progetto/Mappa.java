@@ -36,10 +36,34 @@ class Mappa extends Rectangle {
     Condivisa c;
 
     //costruttore, prende un file e lo legge
-    public Mappa(Condivisa c) {
-        filename = "./src/textures/mappe/mappa1.txt";
+    public Mappa(Condivisa c, MainGame maingame) {
+        filename = "./src/textures/mappe/";
+        System.out.println(maingame.mappaScelta);
+        switch (maingame.mappaScelta) {
+            case "mappa1.png":
+                filename += "mappa1.txt";
+                break;
+            case "mappa2.png":
+                filename += "mappa2.txt";
+                break;
+            case "mappa3.png":
+                filename += "mappa3.txt";
+                break;
+            default:
+        System.out.println("Errore scelta mappa");
+                break;
+        }
+        System.out.println(filename);
         this.c = c;
         readFile();
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     private void readFile() {

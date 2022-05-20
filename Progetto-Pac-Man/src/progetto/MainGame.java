@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 
 public class MainGame extends javax.swing.JFrame {
 
+    public String mappaScelta;
+
     /**
      * Creates new form MainGame
      */
@@ -42,13 +44,14 @@ public class MainGame extends javax.swing.JFrame {
      */
     private void cambioImmagine(String item) throws IOException {
         String percorso = "./src/textures/mappe/";
-        String nome = percorso + item;
 
         BufferedImage myPicture = ImageIO.read(new File(percorso + item));
 
         jLabel2.setIcon(new ImageIcon(myPicture));
 
         System.out.println("cambio immagine " + (percorso + item));
+        
+        mappaScelta=item;
     }
 
     @SuppressWarnings("unchecked")
@@ -118,35 +121,37 @@ public class MainGame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addComponent(numeroFantasmini, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(281, 281, 281)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(avviaGioco)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(299, 299, 299)
+                        .addGap(337, 337, 337)
                         .addComponent(mappa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(270, Short.MAX_VALUE))
+                        .addGap(308, 308, 308)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(avviaGioco)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(53, 53, 53)
+                                    .addComponent(numeroFantasmini, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 131, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(14, 14, 14)
                 .addComponent(mappa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(numeroFantasmini)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(avviaGioco)
-                .addGap(0, 102, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -160,7 +165,7 @@ public class MainGame extends javax.swing.JFrame {
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File f, String name) {
-                return name.endsWith(".jpg");
+                return name.endsWith(".png");
             }
         };
 
@@ -169,6 +174,7 @@ public class MainGame extends javax.swing.JFrame {
             mappa.addItem(file);
         }
 
+        // Cambia l'immagine di preview
         try {
             cambioImmagine(mappa.getItemAt(0));
         } catch (Exception e) {
@@ -181,7 +187,7 @@ public class MainGame extends javax.swing.JFrame {
         // controlla immagine
 
         // Faccio partire il file JFrame (TEMPORANEO solo per avviare)
-        JFrame jf = new JFrame(Integer.parseInt(numeroFantasmini.getText()));
+        JFrame jf = new JFrame(Integer.parseInt(numeroFantasmini.getText()),this);
         //jf.setFantasmini(numeroFantasmini.getText());
         jf.setResizable(false);
         jf.setVisible(true);
